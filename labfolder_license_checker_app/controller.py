@@ -1,11 +1,14 @@
 import re
 import datetime
+
+from django.conf import settings
+
 from .models import ActivityReport, ActivityReportEntry, Instance
 from django.db import transaction, IntegrityError
 import logging
 logger = logging.getLogger(__name__)
 instance_not_exist_logger = logging.getLogger('InstanceNotExistLogger')
-fh = logging.FileHandler('instances.txt')
+fh = logging.FileHandler(settings.BASE_DIR + '/instances.txt')
 instance_not_exist_logger.addHandler(fh)
 instance_not_exist_logger.setLevel(logging.INFO)
 
