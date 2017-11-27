@@ -1,0 +1,21 @@
+{% extends 'base_template.html' %}
+{% block content %}
+
+<div class="container">
+    <h1 class="display-3">Add single report</h1>
+    <form  method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleTextarea">Add the content of the report email here</label>
+            <textarea class="form-control" id="report" name="report" rows="30" placeholder="Add email content...">{{return_report}}</textarea>
+
+        </div>
+        <button name="save_next" type="submit" class="btn btn-primary btn-lg">Save and next</button>
+        <!--
+        <button name="save" type="submit" class="btn btn-secondary btn-lg">Save</button>
+        -->
+    </form>
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "../base_template.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+<div class="container">
+    <div class="alert alert-danger">
+        <strong>Error</strong> Your username and password didn't match. Please try again.
+    </div>
+</div>
+{% endif %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-4 mx-auto">
+            <form class="form-signin" method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <h2 class="form-signin-heading">Please sign in</h2>
+                <div class="form-group">
+                    <label for="id_username" class="sr-only">Username</label>
+                    <input type="text" id="id_username" name="username" class="form-control" placeholder="Username"
+                           required
+                           autofocus>
+                </div>
+                <div class="form-group">
+                    <label for="id_password" class="sr-only">Password</label>
+                    <input type="password" id="id_password" name="password" class="form-control" placeholder="Password"
+                           required>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <input type="hidden" name="next"
+                       value="{% if request.POST.next %}{{ request.POST.next }}{% else %}{{ request.GET.next }}{% endif %}"/>
+
+            </form>
+            {# Assumes you setup the password_reset view in your URLconf #}
+            <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

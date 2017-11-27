@@ -1,0 +1,30 @@
+{% extends 'base_template.html' %}
+{% block content %}
+
+<div class="container">
+    <h1 class="display-3">Add Outlook exports</h1>
+    <p>
+    <h3>Requirements</h3>
+    <ul>
+        <li>Export from Outlook by selecting multiple emails and select "Save as..."</li>
+        <li>Use txt-only format.</li>
+        <li>Only possible for Outlook with german language.</li>
+    </ul>
+    </p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="exampleTextarea">Add the content of the Outlook export here:</label>
+            <textarea class="form-control" id="report" name="report" rows="30"
+                      placeholder="Add complete export here...">{{return_report}}</textarea>
+
+        </div>
+        <button name="save" type="submit" class="btn btn-primary btn-lg">Parse and save</button>
+        <!--
+        <button name="save" type="submit" class="btn btn-secondary btn-lg">Save</button>
+        -->
+    </form>
+
+
+</div>
+{% endblock %}

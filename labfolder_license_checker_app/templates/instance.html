@@ -1,0 +1,47 @@
+{% extends 'base_template.html' %}
+{% load extra_tags %}
+{% block content %}
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+
+
+<div class="container">
+    <h1>Reports for {{instance.name}}</h1>
+    <h2>{{instance.institute.name}} </h2>
+    <table class="table table-striped">
+
+
+        <thead class="thead-dark">
+        <tr>
+
+            <th>Month</th>
+            <th>Active Users</th>
+            <th>Registered Users</th>
+        </tr>
+
+
+        </thead>
+        <tbody>
+        {% for activity_report in instance.activityreport_set.all %}
+        <tr>
+
+            <td>{{ activity_report.reportmonth|date:'m.Y' }}</td>
+            <td>{{ activity_report.activityreportentry_set.all|length }}</td>
+            <td>{{ activity_report.registered_users }}</td>
+
+
+        </tr>
+        {% endfor %}
+        <!--
+         <tr class="table-dark">
+                <td></td>
+                <td></td>
+                 <td></td>
+            </tr>
+            -->
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

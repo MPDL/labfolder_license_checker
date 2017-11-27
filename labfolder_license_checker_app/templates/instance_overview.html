@@ -1,0 +1,67 @@
+{% extends 'base_template.html' %}
+{% load extra_tags %}
+{% block content %}
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-3">MPG labfolder</h1>
+        <p>This system manages the the active-user-reports of the different Max Planck labfolder instances.</p>
+        <p><a class="btn btn-primary btn-lg" href="add_report" role="button">Add a report &raquo;</a></p>
+    </div>
+</div>
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        <p>Active users from <input type="date" id="date_from_input" name="date_from_input" value="{{ date_from|date:'Y-m-d' }}" required="true"> to <input
+                type="date" id="date_to_input" name="date_to_input" value="{{ date_to|date:'Y-m-d' }}" required="true"> <input type="submit"
+                                                                                          class="btn btn-outline-primary btn-sm"
+                                                                                          value="Recalculate"></p>
+
+    </form>
+    <table class="table table-striped">
+
+
+        <thead class="thead-dark">
+        <tr>
+            <th>Institute</th>
+            <th>Instance</th>
+            <th>Last Report Date</th>
+            <th>Active Users Last Report</th>
+            <th>Registered Users Last Report</th>
+            <th>Active users<br>{{ date_from|date:'M Y'}} - {{ date_to|date:'M Y'}}</th>
+
+        </tr>
+
+
+        </thead>
+        <tbody>
+        {% for instance in instances %}
+        <tr>
+            <td>{{ instance.institute }}</td>
+            <td><a href="{% url 'view_instance' instance_id=instance.id %}">{{ instance.name }}</a></td>
+            {% date_older instance.latest_report.reportmonth 1 as report_too_old %}
+            <td class="{% if report_too_old %} table-danger {% endif%}">{% if instance.latest_report %}
+                {{instance.latest_report.reportmonth|date:'m.Y'}} {% else %} - {%endif%}
+            </td>
+            <td>{% if instance.latest_report %} {{instance.latest_report.entries|length}} {% else %} - {%endif%}</td>
+            <td>{% if instance.latest_report %} {{instance.latest_report.registered_users}} {% else %} - {%endif%}</td>
+            <td>{% active_users_by_date instance date_from date_to as active_users_queryset %}{{active_users_queryset|length}}
+            </td>
+
+        </tr>
+        {% endfor %}
+        <tr class="table-dark">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{all_registered_users}}</td>
+            <th>{{all_active_users|length}}</th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
