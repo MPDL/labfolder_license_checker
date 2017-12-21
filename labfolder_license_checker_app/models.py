@@ -41,6 +41,7 @@ class ActivityReport(models.Model):
     instance = models.ForeignKey(Instance, on_delete=models.CASCADE)
     reportmonth = models.DateField(default=None)
     registered_users = models.BigIntegerField(default=None)
+    active_users_last_6_months = models.BigIntegerField(default=None, null=True, blank=True)
 
     def entries(self):
         return self.activityreportentry_set.all()

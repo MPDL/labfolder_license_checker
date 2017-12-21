@@ -13,10 +13,12 @@
 <div class="container">
     <form method="post">
         {% csrf_token %}
-        <p>Active users from <input type="date" id="date_from_input" name="date_from_input" value="{{ date_from|date:'Y-m-d' }}" required="true"> to <input
-                type="date" id="date_to_input" name="date_to_input" value="{{ date_to|date:'Y-m-d' }}" required="true"> <input type="submit"
-                                                                                          class="btn btn-outline-primary btn-sm"
-                                                                                          value="Recalculate"></p>
+        <p>Active users from <input type="date" id="date_from_input" name="date_from_input"
+                                    value="{{ date_from|date:'Y-m-d' }}" required="true"> to <input
+                type="date" id="date_to_input" name="date_to_input" value="{{ date_to|date:'Y-m-d' }}" required="true">
+            <input type="submit"
+                   class="btn btn-outline-primary btn-sm"
+                   value="Recalculate"></p>
 
     </form>
     <table class="table table-striped">
@@ -29,7 +31,8 @@
             <th>Last Report Date</th>
             <th>Active Users Last Report</th>
             <th>Registered Users Last Report</th>
-            <th>Active users<br>{{ date_from|date:'M Y'}} - {{ date_to|date:'M Y'}}</th>
+            <th>Active Users Last 6 months Last Report</th>
+            <th>Calculated Active users<br>{{ date_from|date:'M Y'}} - {{ date_to|date:'M Y'}}</th>
 
         </tr>
 
@@ -46,8 +49,13 @@
             </td>
             <td>{% if instance.latest_report %} {{instance.latest_report.entries|length}} {% else %} - {%endif%}</td>
             <td>{% if instance.latest_report %} {{instance.latest_report.registered_users}} {% else %} - {%endif%}</td>
-            <td>{% active_users_by_date instance date_from date_to as active_users_queryset %}{{active_users_queryset|length}}
+
+            {% active_users_by_date instance date_from date_to as active_users_queryset %}
+            <td class="{% if active_users_queryset|length != instance.latest_report.active_users_last_6_months %} table-danger {% endif%}">
+                {% if instance.latest_report and instance.latest_report.active_users_last_6_months %} {{instance.latest_report.active_users_last_6_months}} {% else %} -
+                {%endif%}
             </td>
+            <td>{{active_users_queryset|length}}</td>
 
         </tr>
         {% endfor %}
@@ -57,6 +65,7 @@
             <td></td>
             <td></td>
             <td>{{all_registered_users}}</td>
+            <td></td>
             <th>{{all_active_users|length}}</th>
         </tr>
         </tbody>

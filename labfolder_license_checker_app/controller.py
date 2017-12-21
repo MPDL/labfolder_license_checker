@@ -18,6 +18,7 @@ def readAndSaveReport(reportString):
              "(\n|\r|\r\n)"
              "Registered users: (?P<registered_users>\d*)(\n|\r|\r\n)"
              "Active users: (?P<active_users>\d*)(\n|\r|\r\n)"
+             "(Active users last six months: (?P<active_users_last_6_months>\d*)(\n|\r|\r\n))?"
              "(\n|\r|\r\n)"
              "User    Activity Count(\n|\r|\r\n)"
              "(\n|\r|\r\n)"
@@ -34,6 +35,8 @@ def readAndSaveReport(reportString):
     logger.debug("Parsed registered users: " + registered_users)
     active_users = m.group("active_users")
     logger.debug("Parsed active users: " + active_users)
+    active_users_last_6_months = m.group("active_users_last_6_months")
+    logger.debug("Parsed active users last 6 months: " + str(active_users_last_6_months))
     activity_table = m.group("activity_table")
     logger.debug("Parsed activity table: " + activity_table)
 
@@ -45,6 +48,7 @@ def readAndSaveReport(reportString):
         raise e
     activity_report.reportmonth = report_month;
     activity_report.registered_users = registered_users
+    activity_report.active_users_last_6_months = active_users_last_6_months
     activity_report.save()
 
     for line in activity_table.splitlines():
