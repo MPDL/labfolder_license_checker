@@ -28,6 +28,7 @@
         <tr>
             <th>Institute</th>
             <th>Instance</th>
+            <th>Server Version</th>
             <th>Last Report Date</th>
             <th>Active Users Last Report</th>
             <th>Registered Users Last Report</th>
@@ -44,6 +45,7 @@
             <td>{{ instance.institute }}</td>
             <td><a href="{% url 'view_instance' instance_id=instance.id %}">{{ instance.name }}</a></td>
             {% date_older instance.latest_report.reportmonth 1 as report_too_old %}
+            <td>{% if instance.latest_report.server_version %} {{instance.latest_report.server_version}} {% else %} - {%endif%}</td>
             <td class="{% if report_too_old %} table-danger {% endif%}">{% if instance.latest_report %}
                 {{instance.latest_report.reportmonth|date:'m.Y'}} {% else %} - {%endif%}
             </td>
@@ -60,6 +62,7 @@
         </tr>
         {% endfor %}
         <tr class="table-dark">
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

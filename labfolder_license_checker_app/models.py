@@ -42,6 +42,7 @@ class ActivityReport(models.Model):
     reportmonth = models.DateField(default=None)
     registered_users = models.BigIntegerField(default=None)
     active_users_last_6_months = models.BigIntegerField(default=None, null=True, blank=True)
+    server_version = models.CharField(default=None, null=True, max_length=512)
 
     def entries(self):
         return self.activityreportentry_set.all()

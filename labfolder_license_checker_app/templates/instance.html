@@ -15,6 +15,7 @@
         <tr>
 
             <th>Month</th>
+            <th>Server Version</th>
             <th>Active Users</th>
             <th>Registered Users</th>
             <th>Active Users Last 6 months (report)</th>
@@ -27,6 +28,7 @@
         <tr>
 
             <td>{{ activity_report.reportmonth|date:'m.Y' }}</td>
+            <td>{{ activity_report.server_version }}</td>
             <td>{{ activity_report.activityreportentry_set.all|length }}</td>
             <td>{{ activity_report.registered_users }}</td>
             <td>{{ activity_report.active_users_last_6_months }}</td>

@@ -16,6 +16,7 @@ instance_not_exist_logger.setLevel(logging.INFO)
 def readAndSaveReport(reportString):
     regex = ("labfolder report for (?P<instance_name>.*) for (?P<date>\d\d\.\d\d\d\d)(\n|\r|\r\n)"
              "(\n|\r|\r\n)"
+             "(Server version: (?P<server_version>.*)(\n|\r|\r\n))?"
              "Registered users: (?P<registered_users>\d*)(\n|\r|\r\n)"
              "Active users: (?P<active_users>\d*)(\n|\r|\r\n)"
              "(Active users last six months: (?P<active_users_last_6_months>\d*)(\n|\r|\r\n))?"
@@ -31,6 +32,8 @@ def readAndSaveReport(reportString):
     logger.debug("Parsed instance name: " + instance_name)
     report_month = datetime.datetime.strptime("01." + m.group("date"), "%d.%m.%Y")
     logger.debug("Parsed report month: " + str(report_month))
+    server_version = m.group("server_version")
+    logger.debug("Parsed server version: " + str(server_version))
     registered_users = m.group("registered_users")
     logger.debug("Parsed registered users: " + registered_users)
     active_users = m.group("active_users")
@@ -46,7 +49,8 @@ def readAndSaveReport(reportString):
     except Instance.DoesNotExist as e:
         e.instance_name = instance_name
         raise e
-    activity_report.reportmonth = report_month;
+    activity_report.reportmonth = report_month
+    activity_report.server_version = server_version
     activity_report.registered_users = registered_users
     activity_report.active_users_last_6_months = active_users_last_6_months
     activity_report.save()
