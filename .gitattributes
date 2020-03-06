@@ -1,4 +1,6 @@
 # Basic .gitattributes for a python repo.
+* text=auto eol=lf
+
 
 # Source files
 # ============
@@ -7,6 +9,7 @@
 *.py3 		text
 *.pyw 		text
 *.pyx  		text
+*.hmtl      text
 
 # Binary files
 # ============
