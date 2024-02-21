@@ -1,16 +1,17 @@
-from django.conf.urls import url, include
+from django.conf.urls import include
+from django.urls import re_path
 
 from labfolder_license_checker_app import views
 
 urlpatterns = [
 
-    url(r'^$', views.instance_overview, name='view_instances'),
+    re_path(r'^$', views.instance_overview, name='view_instances'),
 
-    url(r'add_report/$', views.add_report, name='add_report'),
+    re_path(r'add_report/$', views.add_report, name='add_report'),
 
-    url(r'add_reports_batch/$', views.add_reports_batch, name='add_reports_batch'),
+    re_path(r'add_reports_batch/$', views.add_reports_batch, name='add_reports_batch'),
 
-    url(r'instance/(?P<instance_id>[a-zA-Z0-9_-]+)/$', views.view_instance, name='view_instance')
+    re_path(r'instance/(?P<instance_id>[a-zA-Z0-9_-]+)/$', views.view_instance, name='view_instance')
 
     #url(r'^show/(?P<slug>[a-zA-Z0-9_-]+)/$', views.show_survey, name='show_survey_page'),
 
