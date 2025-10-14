@@ -12,12 +12,16 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import dotenv
+import logging
 
-dotenv.load_dotenv()
+logger = logging.getLogger(__name__)
+
+# see https://github.com/theskumar/python-dotenv/issues/210
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+dotenv.load_dotenv(dotenv_path)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -29,8 +33,6 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(', ')
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -136,6 +138,8 @@ LOGIN_URL = '/login'
 
 INTERNAL_IPS = ['127.0.0.1']
 
+LOG_DIR='/srv/labfolder_license_checker/'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -143,14 +147,19 @@ LOGGING = {
         'console': {
             'class': 'logging.StreamHandler',
         },
+        'file': {
+            'level': 'INFO',
+           'class': 'logging.FileHandler',
+           'filename': os.path.join(LOG_DIR, 'labfolder_license_checker.log')
+}
     },
     'loggers': {
         'django': {
-            'handlers': ['console'],
+            'handlers': ['console','file'],
             'level': os.getenv('DJANGO_LOG_LEVEL', 'WARN'),
         },
         'labfolder_license_checker_app': {
-            'handlers': ['console'],
+            'handlers': ['console','file'],
             'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
         },
     },
