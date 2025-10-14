@@ -14,12 +14,12 @@ instance_not_exist_logger.setLevel(logging.INFO)
 
 @transaction.atomic
 def readAndSaveReport(reportString):
-    regex = ("labfolder report for (?P<instance_name>.*) for (?P<date>\d\d\.\d\d\d\d)(\n|\r|\r\n)"
+    regex = (r"labfolder report for (?P<instance_name>.*) for (?P<date>\d\d\.\d\d\d\d)(\n|\r|\r\n)"
              "(\n|\r|\r\n)"
              "(Server version: (?P<server_version>.*)(\n|\r|\r\n))?"
-             "Registered users: (?P<registered_users>\d*)(\n|\r|\r\n)"
-             "Active users: (?P<active_users>\d*)(\n|\r|\r\n)"
-             "(Active users last six months: (?P<active_users_last_6_months>\d*)(\n|\r|\r\n))?"
+             r"Registered users: (?P<registered_users>\d*)(\n|\r|\r\n)"
+             r"Active users: (?P<active_users>\d*)(\n|\r|\r\n)"
+             r"(Active users last six months: (?P<active_users_last_6_months>\d*)(\n|\r|\r\n))?"
              "(\n|\r|\r\n)"
              "User    Activity Count(\n|\r|\r\n)"
              "(\n|\r|\r\n)"
@@ -57,7 +57,7 @@ def readAndSaveReport(reportString):
 
     for line in activity_table.splitlines():
         if line.strip():
-            strippedLine = re.split("\s+", line.strip())
+            strippedLine = re.split(r"\s+", line.strip())
 
             entry = ActivityReportEntry()
             entry.activity_report = activity_report;

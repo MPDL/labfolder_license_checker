@@ -1,8 +1,9 @@
-django==4.2.10
-django-debug-toolbar==4.3.0
-psycopg==3.1.18
-python-dateutil==2.8.2
-pytz==2024.1
+django==5.2.7
+django-debug-toolbar==6.0.0
+psycopg[binary]==3.2.10
+python-dateutil==2.9.0.post0
+pytz==2025.2
 #Question==0.1
-six==1.16.0
-sqlparse==0.4.4
+six==1.17.0
+sqlparse==0.5.3
+python-dotenv==1.1.1
