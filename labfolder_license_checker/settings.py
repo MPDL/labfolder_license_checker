@@ -151,7 +151,7 @@ LOGGING = {
         #    'level': 'INFO',
         #   'class': 'logging.FileHandler',
         #   'filename': os.path.join(LOG_DIR, 'labfolder_license_checker.log')
-}
+        #}
     },
     'loggers': {
         'django': {
