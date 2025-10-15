@@ -138,7 +138,7 @@ LOGIN_URL = '/login'
 
 INTERNAL_IPS = ['127.0.0.1']
 
-LOG_DIR='/srv/labfolder_license_checker/'
+# LOG_DIR='/srv/labfolder_license_checker/'
 
 LOGGING = {
     'version': 1,
@@ -147,19 +147,19 @@ LOGGING = {
         'console': {
             'class': 'logging.StreamHandler',
         },
-        'file': {
-            'level': 'INFO',
-           'class': 'logging.FileHandler',
-           'filename': os.path.join(LOG_DIR, 'labfolder_license_checker.log')
+        # 'file': {
+        #    'level': 'INFO',
+        #   'class': 'logging.FileHandler',
+        #   'filename': os.path.join(LOG_DIR, 'labfolder_license_checker.log')
 }
     },
     'loggers': {
         'django': {
-            'handlers': ['console','file'],
+            'handlers': ['console'],
             'level': os.getenv('DJANGO_LOG_LEVEL', 'WARN'),
         },
         'labfolder_license_checker_app': {
-            'handlers': ['console','file'],
+            'handlers': ['console'],
             'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
         },
     },
